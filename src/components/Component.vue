@@ -2,14 +2,14 @@
   <main class="main-container">
     <header class="header">recommendation</header>
     <div class="div-3"></div>
-    <div class="t-shirt">T-Shirt</div>
+    <div id="recommendation" class="t-shirt">-</div>
   </main>
   <div class="container min-vh-50 d-flex justify-content-center align-items-center">
     <div class="form-group">
-      <input type="number" class="form-control" placeholder="current temperature" v-model="minTemp">
+      <input id="curTemp" type="number" class="form-control" placeholder="current temperature">
     </div>
   </div>
-  <button type="button" v-on:click="addClothing()" class="btn btn-primary" id="saveButton">refresh</button>
+  <button type="button" v-on:click="findClothing()" class="btn btn-primary" id="saveButton">refresh</button>
 </template>
 
 <style scoped>
@@ -48,5 +48,34 @@
 </style>
 
 <script>
+export default {
+  methods: {
+    findClothing () {
+      const requestOptions = {
+        method: 'GET',
+        redirect: 'follow',
+        Accept: 'application/json'
+      }
+
+      console.log(fetch('http://localhost:8090/Clothing', requestOptions)
+        .then(function (response) {
+          return response.json()
+        }).then(function (obj) {
+          const curTemp = document.getElementById('curTemp').value
+          let tempName = ''
+          let biggestTempSoFar = -Infinity
+
+          for (let i = 0; i < obj.length; i++) {
+            if (obj[i].minTemp <= curTemp && obj[i].minTemp > biggestTempSoFar) {
+              biggestTempSoFar = obj[i].minTemp
+              tempName = obj[i].name
+            }
+          }
+          document.getElementById('recommendation').innerHTML = tempName
+        })
+        .catch(error => console.log('error', error)))
+    }
+  }
+}
 
 </script>
