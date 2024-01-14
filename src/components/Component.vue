@@ -23,6 +23,7 @@
 }
 
 .header {
+  margin: -5px;
   color: #000;
   align-self: start;
   width: 100%;
@@ -39,11 +40,19 @@
   margin: 6px 25px 0 2px;
 }
 
+#curTemp {
+  margin: 0px
+}
+
 .t-shirt {
   color: #000;
   text-align: center;
   margin: 21px 0 -3px;
   font: 500 28px Della Respira, sans-serif;
+}
+
+.btn {
+  margin: 8px
 }
 </style>
 
@@ -62,7 +71,7 @@ export default {
           return response.json()
         }).then(function (obj) {
           const curTemp = document.getElementById('curTemp').value
-          let tempName = ''
+          let tempName = 'nothing fitting found'
           let biggestTempSoFar = -Infinity
 
           for (let i = 0; i < obj.length; i++) {

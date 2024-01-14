@@ -30,6 +30,9 @@
 </template>
 
 <style>
+.form-group {
+  margin: 5px
+}
 </style>
 
 <script setup>
